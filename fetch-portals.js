@@ -25,22 +25,12 @@ const LENDING_PLATFORMS = [
     'aavev3-stata-token', 'curve-llamalend', 'radiantv2', 'extra-finance-xlend'
 ];
 
-// Stablecoin symbols for categorization
-const STABLECOIN_SYMBOLS = new Set([
-    'USDC', 'USDT', 'DAI', 'FRAX', 'USDE', 'USDS', 'GHO', 'CRVUSD',
-    'SUSD', 'LUSD', 'USDG', 'AUSD', 'RLUSD', 'USDTB', 'USDG', 'TUSD',
-    'BUSD', 'PYUSD', 'USDP', 'DOLA', 'EUSD', 'CUSD', 'UST', 'FDUSD',
-    'USDD', 'MIM', 'CUSD', 'EURC', 'PYUSD', 'GYD', 'DGH', 'BUIDL',
-    // Staked/wrapped variants
-    'SUSDE', 'SUSDS', 'SFRAX', 'SDAI', 'SUSDC', 'SUSDT',
-    // Syrup/LP tokens
-    'SYRUPUSDC', 'SYRUPUSDT', 'SYRUPDAI',
-]);
+// Stablecoin registry from Pharos (authoritative list)
+const PHAROS_STABLECOINS = new Set(require('./data/stablecoin-registry.json'));
 
-// Check if a symbol is a stablecoin (includes prefix/suffix matching)
+// Check if a symbol is a stablecoin (using Pharos registry)
 function isStablecoin(symbol) {
     const s = symbol.toUpperCase();
-    if (STABLECOIN_SYMBOLS.has(s)) return true;
     
     // LP tokens: both sides must be stablecoins
     const lpSep = s.includes('/') ? '/' : s.includes('-') ? '-' : s.includes('_') ? '_' : null;
@@ -50,21 +40,17 @@ function isStablecoin(symbol) {
         return parts.length === 2 && parts.every(p => isSingleStablecoin(p));
     }
     
-    // Single token: catch variants like AETHUSDC, SYRUPUSDC, etc.
+    // Single token check
     return isSingleStablecoin(s);
 }
 
-// Check if a single token (not LP) is a stablecoin
+// Check if a single token (not LP) is a stablecoin using Pharos registry
 function isSingleStablecoin(s) {
-    if (STABLECOIN_SYMBOLS.has(s)) return true;
-    if (s.includes('USDC') || s.includes('USDT') || s.includes('DAI') || 
-        s.includes('FRAX') || s.includes('USDE') || s.includes('USD') ||
-        s.includes('EUR') || s.includes('GBP')) {
-        // Exclude BTC/ETH derivatives
-        if (s.includes('BTC') || s.includes('ETH') || s.includes('WSTETH') || 
-            s.includes('RETH') || s.includes('STETH')) return false;
-        return true;
-    }
+    // Direct match
+    if (PHAROS_STABLECOINS.has(s)) return true;
+    // Also check common staked/wrapped variants that may not be in registry
+    const stripped = s.replace(/^(S|W)/, '');
+    if (PHAROS_STABLECOINS.has(stripped)) return true;
     return false;
 }
 
