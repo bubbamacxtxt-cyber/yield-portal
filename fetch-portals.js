@@ -41,7 +41,22 @@ const STABLECOIN_SYMBOLS = new Set([
 function isStablecoin(symbol) {
     const s = symbol.toUpperCase();
     if (STABLECOIN_SYMBOLS.has(s)) return true;
-    // Catch variants: AETHUSDC, CBBTCUSDC, etc.
+    
+    // LP tokens: both sides must be stablecoins
+    const lpSep = s.includes('/') ? '/' : s.includes('-') ? '-' : s.includes('_') ? '_' : null;
+    if (lpSep) {
+        const parts = s.split(lpSep).map(p => p.trim());
+        // Both tokens in the pair must be stablecoins
+        return parts.length === 2 && parts.every(p => isSingleStablecoin(p));
+    }
+    
+    // Single token: catch variants like AETHUSDC, SYRUPUSDC, etc.
+    return isSingleStablecoin(s);
+}
+
+// Check if a single token (not LP) is a stablecoin
+function isSingleStablecoin(s) {
+    if (STABLECOIN_SYMBOLS.has(s)) return true;
     if (s.includes('USDC') || s.includes('USDT') || s.includes('DAI') || 
         s.includes('FRAX') || s.includes('USDE') || s.includes('USD') ||
         s.includes('EUR') || s.includes('GBP')) {
