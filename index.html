@@ -7,73 +7,118 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a25;
-            --border: #2a2a3a; --text: #e0e0e0; --text2: #888;
-            --green: #00e676; --red: #ff5252; --blue: #448aff;
+            --bg: #09090f; --surface: #111118; --surface2: #1a1a24;
+            --border: #252535; --border2: #333348;
+            --text: #e8e8f0; --text2: #8888a0; --text3: #555568;
+            --green: #00e676; --green2: #00c853;
+            --red: #ff5252; --blue: #5c6bc0; --blue2: #3f51b5;
             --gold: #ffd740; --purple: #b388ff;
+            --cyan: #18ffff;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
         
-        .header { padding: 24px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-        .header h1 { font-size: 1.4em; }
-        .header .meta { color: var(--text2); font-size: 0.85em; }
+        /* Header */
+        .header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .header h1 { font-size: 1.3em; font-weight: 700; letter-spacing: -0.02em; }
+        .header h1 span { color: var(--blue); }
+        .header .meta { color: var(--text2); font-size: 0.8em; font-family: monospace; }
         
-        .tabs { display: flex; gap: 4px; padding: 12px 20px; border-bottom: 1px solid var(--border); overflow-x: auto; }
-        .tab { padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; color: var(--text2); background: none; border: none; white-space: nowrap; }
-        .tab:hover { background: var(--surface2); color: var(--text); }
-        .tab.active { background: var(--blue); color: #fff; }
+        /* Stats strip */
+        .stats-strip { display: flex; gap: 1px; background: var(--border); overflow-x: auto; }
+        .stat-card { flex: 1; min-width: 120px; background: var(--surface); padding: 16px 20px; text-align: center; }
+        .stat-card .num { font-size: 1.5em; font-weight: 800; letter-spacing: -0.03em; }
+        .stat-card .lbl { font-size: 0.7em; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
         
-        .stats-bar { display: flex; gap: 16px; padding: 16px 20px; flex-wrap: wrap; }
-        .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; flex: 1; min-width: 120px; }
-        .stat .value { font-size: 1.4em; font-weight: 700; }
-        .stat .label { color: var(--text2); font-size: 0.8em; margin-top: 2px; }
+        /* Tabs */
+        .tabs { display: flex; gap: 0; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--surface); overflow-x: auto; }
+        .tab { padding: 12px 18px; cursor: pointer; font-size: 0.85em; font-weight: 500; color: var(--text2); border: none; background: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
+        .tab:hover { color: var(--text); }
+        .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
         
-        .filters { display: flex; gap: 8px; padding: 12px 20px; flex-wrap: wrap; align-items: center; }
-        .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: none; color: var(--text2); cursor: pointer; font-size: 0.85em; }
-        .filter-btn:hover, .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
-        .search { flex: 1; min-width: 200px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9em; }
+        /* Filters bar */
+        .filters { padding: 16px 24px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; background: var(--surface); border-bottom: 1px solid var(--border); }
+        .filter-group { display: flex; align-items: center; gap: 6px; }
+        .filter-label { font-size: 0.75em; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+        .filter-input { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 0.85em; width: 90px; }
+        .filter-input::placeholder { color: var(--text3); }
+        .filter-select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 0.85em; }
+        .search { flex: 1; min-width: 180px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 0.85em; }
+        .search::placeholder { color: var(--text3); }
+        .filter-btn { padding: 5px 12px; border-radius: 14px; border: 1px solid var(--border2); background: none; color: var(--text2); cursor: pointer; font-size: 0.8em; transition: all 0.15s; }
+        .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+        .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .clear-btn { padding: 5px 10px; border-radius: 14px; border: 1px solid var(--border2); background: none; color: var(--text3); cursor: pointer; font-size: 0.75em; }
+        .clear-btn:hover { border-color: var(--red); color: var(--red); }
         
-        .table-wrap { padding: 0 20px 20px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-        th { text-align: left; padding: 10px 12px; color: var(--text2); font-weight: 500; border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; }
+        /* Table */
+        .table-wrap { padding: 0 24px 24px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+        th { text-align: left; padding: 12px 14px; color: var(--text2); font-weight: 600; font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; user-select: none; }
         th:hover { color: var(--text); }
-        td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
-        tr:hover td { background: var(--surface); }
+        th.sorted { color: var(--blue); }
+        th .sort-arrow { margin-left: 4px; font-size: 0.8em; }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+        tr:hover td { background: rgba(92,107,192,0.04); }
+        tr:last-child td { border-bottom: none; }
         
-        .apy { font-weight: 700; }
+        /* Cell styles */
+        .token-name { font-weight: 600; }
+        .chain-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: 500; background: var(--surface2); color: var(--text2); }
+        .proto { color: var(--text2); font-size: 0.9em; }
+        .apy { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .apy.ultra { color: var(--cyan); }
         .apy.high { color: var(--green); }
         .apy.mid { color: var(--gold); }
         .apy.low { color: var(--text); }
+        .apy.zero { color: var(--text3); }
+        .tvl { color: var(--text2); font-variant-numeric: tabular-nums; }
+        .change { font-variant-numeric: tabular-nums; font-weight: 500; }
+        .change.up { color: var(--green); }
+        .change.down { color: var(--red); }
+        .change.flat { color: var(--text3); }
+        .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.7em; font-weight: 600; }
+        .badge-stablecoin { background: #1b3a1b; color: #7dcea0; }
+        .badge-eth { background: #1a1a3e; color: #8e8ecc; }
+        .badge-btc { background: #3e1a1a; color: #cc8e8e; }
+        .badge-other { background: #2a2a2a; color: #888; }
         
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: 500; }
-        .badge-stablecoin { background: #1b5e20; color: #a5d6a7; }
-        .badge-eth { background: #1a237e; color: #9fa8da; }
-        .badge-btc { background: #4a148c; color: #ce93d8; }
-        .badge-other { background: #333; color: #aaa; }
-        
-        .tvl { color: var(--text2); }
-        .chain { color: var(--text2); font-size: 0.85em; }
-        
-        .section { padding: 20px; display: none; }
+        /* Sections */
+        .section { display: none; }
         .section.active { display: block; }
         
-        .chain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        /* Empty state */
+        .empty { text-align: center; padding: 80px 20px; color: var(--text2); }
+        .empty h2 { font-size: 1.1em; margin-bottom: 8px; color: var(--text); }
+        .empty p { font-size: 0.9em; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 20px; color: var(--text3); font-size: 0.75em; border-top: 1px solid var(--border); }
+        .footer a { color: var(--text2); text-decoration: none; }
+        .footer a:hover { color: var(--blue); }
+        
+        /* Chain grid */
+        .chain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; padding: 20px 24px; }
         .chain-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-        .chain-card .name { font-weight: 600; margin-bottom: 8px; }
-        .chain-card .tvl { font-size: 1.2em; font-weight: 700; }
+        .chain-card .name { font-weight: 600; font-size: 0.95em; margin-bottom: 8px; text-transform: capitalize; }
+        .chain-card .tvl { font-size: 1.3em; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .chain-card .detail { color: var(--text2); font-size: 0.8em; margin-top: 4px; }
         
-        .footer { text-align: center; padding: 20px; color: var(--text2); font-size: 0.8em; border-top: 1px solid var(--border); }
-        .footer a { color: var(--text2); }
-        
-        .empty { text-align: center; padding: 60px 20px; color: var(--text2); }
-        .empty h2 { font-size: 1.2em; margin-bottom: 8px; color: var(--text); }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filters { padding: 12px 16px; }
+            .table-wrap { padding: 0 16px 16px; }
+            .stats-strip { flex-wrap: wrap; }
+            .stat-card { min-width: 100px; }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📊 Yield Portal</h1>
+        <h1>📊 <span>Yield Portal</span></h1>
         <div class="meta" id="meta"></div>
     </div>
+    
+    <div class="stats-strip" id="stats"></div>
     
     <div class="tabs">
         <button class="tab active" data-tab="all">All Yields</button>
@@ -84,10 +129,31 @@
         <button class="tab" data-tab="chains">⛓️ Chains</button>
     </div>
     
-    <div class="stats-bar" id="stats-bar"></div>
-    
     <div class="filters" id="filters">
         <input type="text" class="search" id="search" placeholder="Search token, protocol, chain...">
+        <div class="filter-group">
+            <span class="filter-label">Min TVL</span>
+            <input type="text" class="filter-input" id="minTvl" placeholder="$1M">
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Max TVL</span>
+            <input type="text" class="filter-input" id="maxTvl" placeholder="No max">
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Min APY</span>
+            <input type="text" class="filter-input" id="minApy" placeholder="0%">
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Max APY</span>
+            <input type="text" class="filter-input" id="maxApy" placeholder="No max">
+        </div>
+        <select class="filter-select" id="chainFilter">
+            <option value="">All Chains</option>
+        </select>
+        <select class="filter-select" id="protoFilter">
+            <option value="">All Protocols</option>
+        </select>
+        <button class="clear-btn" id="clearFilters">Clear</button>
     </div>
     
     <div class="section active" id="section-all"></div>
@@ -98,7 +164,7 @@
     <div class="section" id="section-chains"></div>
     
     <div class="footer">
-        Built with data, not vibes. • <a href="https://github.com/bubbamacxtxt-cyber/yield-portal">GitHub</a>
+        Built with data, not vibes. • <a href="https://github.com/bubbamacxtxt-cyber/yield-portal">GitHub</a> • <a href="https://github.com/bubbamacxtxt-cyber/yield-portal/blob/main/docs/STABLECOIN-INTELLIGENCE.md">Roadmap</a>
     </div>
 
     <script>
@@ -111,6 +177,7 @@
             try {
                 const resp = await fetch('data.json');
                 DATA = await resp.json();
+                populateFilters();
                 render();
             } catch (e) {
                 document.getElementById('section-all').innerHTML = '<div class="empty"><h2>No data yet</h2><p>Data will appear after the first GitHub Actions fetch.</p></div>';
@@ -118,7 +185,7 @@
         }
 
         function fmt(n, type) {
-            if (n == null) return '—';
+            if (n == null || isNaN(n)) return '—';
             if (type === 'apy') return n.toFixed(2) + '%';
             if (type === 'tvl') {
                 if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
@@ -126,98 +193,154 @@
                 if (n >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
                 return '$' + n.toFixed(0);
             }
-            return n;
+            return n.toString();
         }
 
         function apyClass(apy) {
+            if (apy >= 10) return 'ultra';
             if (apy >= 5) return 'high';
             if (apy >= 2) return 'mid';
-            return 'low';
+            if (apy > 0) return 'low';
+            return 'zero';
         }
 
-        function badge(type) {
-            return `<span class="badge badge-${type}">${type}</span>`;
+        function parseVal(s) {
+            if (!s) return null;
+            s = s.replace(/[^0-9.kKmMbB]/g, '');
+            if (s.toLowerCase().endsWith('b')) return parseFloat(s) * 1e9;
+            if (s.toLowerCase().endsWith('m')) return parseFloat(s) * 1e6;
+            if (s.toLowerCase().endsWith('k')) return parseFloat(s) * 1e3;
+            return parseFloat(s);
         }
 
-        function renderStats() {
-            const s = DATA.stats;
-            document.getElementById('stats-bar').innerHTML = `
-                <div class="stat"><div class="value">${s.total_tokens.toLocaleString()}</div><div class="label">Tokens Tracked</div></div>
-                <div class="stat"><div class="value">${s.total_chains}</div><div class="label">Chains</div></div>
-                <div class="stat"><div class="value">${s.total_protocols}</div><div class="label">Protocols</div></div>
-                <div class="stat"><div class="value">${fmt(s.total_tvl, 'tvl')}</div><div class="label">Total TVL</div></div>
-            `;
-            const updated = new Date(DATA.generatedAt);
-            document.getElementById('meta').textContent = `Updated: ${updated.toLocaleString()}`;
+        function applyFilters(tokens) {
+            if (!tokens) return [];
+            const search = document.getElementById('search').value.toLowerCase();
+            const minTvl = parseVal(document.getElementById('minTvl').value);
+            const maxTvl = parseVal(document.getElementById('maxTvl').value);
+            const minApy = parseVal(document.getElementById('minApy').value);
+            const maxApy = parseVal(document.getElementById('maxApy').value);
+            const chain = document.getElementById('chainFilter').value;
+            const proto = document.getElementById('protoFilter').value;
+
+            return tokens.filter(t => {
+                if (search && !t.symbol.toLowerCase().includes(search) && !t.protocol.toLowerCase().includes(search) && !t.chain.toLowerCase().includes(search)) return false;
+                if (minTvl && (t.tvl_usd || 0) < minTvl) return false;
+                if (maxTvl && (t.tvl_usd || 0) > maxTvl) return false;
+                if (minApy !== null && !isNaN(minApy) && minApy > 0 && (t.apy || 0) < minApy) return false;
+                if (maxApy !== null && !isNaN(maxApy) && maxApy > 0 && (t.apy || 0) > maxApy) return false;
+                if (chain && t.chain !== chain) return false;
+                if (proto && !t.protocol.includes(proto)) return false;
+                return true;
+            });
         }
 
-        function renderTable(tokens, containerId, showRisk = false) {
-            if (!tokens || tokens.length === 0) {
-                document.getElementById(containerId).innerHTML = '<div class="empty"><h2>No data</h2></div>';
-                return;
-            }
-            
-            const sorted = [...tokens].sort((a, b) => {
-                let va = a[sortCol], vb = b[sortCol];
+        function sortTokens(tokens) {
+            return [...tokens].sort((a, b) => {
+                let va = a[sortCol] ?? 0, vb = b[sortCol] ?? 0;
                 if (sortCol === 'risk_score') { va = a.risk_score || 0; vb = b.risk_score || 0; }
                 return sortDir === 'desc' ? vb - va : va - vb;
             });
+        }
 
-            const rows = sorted.map(t => `<tr>
-                <td><strong>${t.symbol}</strong> ${badge(t.asset_type)}</td>
-                <td class="chain">${t.chain}</td>
-                <td>${t.protocol}</td>
-                <td class="apy ${apyClass(t.apy)}">${fmt(t.apy, 'apy')}</td>
-                <td class="tvl">${fmt(t.tvl_usd, 'tvl')}</td>
-                ${showRisk ? `<td>${t.risk_score ? t.risk_score.toFixed(1) : '—'}</td>` : ''}
-            </tr>`).join('');
+        function renderTable(tokens, containerId, showRisk = false) {
+            const filtered = sortTokens(applyFilters(tokens));
+            if (!filtered.length) {
+                document.getElementById(containerId).innerHTML = '<div class="empty"><h2>No results</h2><p>Try adjusting your filters.</p></div>';
+                return;
+            }
+
+            const arrow = (col) => sortCol === col ? (sortDir === 'desc' ? '↓' : '↑') : '';
+
+            const rows = filtered.slice(0, 500).map(t => {
+                const change1d = t.change_1d;
+                const change7d = t.change_7d;
+                return `<tr>
+                    <td><span class="token-name">${t.symbol}</span> <span class="badge badge-${t.asset_type}">${t.asset_type}</span></td>
+                    <td><span class="chain-badge">${t.chain}</span></td>
+                    <td class="proto">${t.protocol}</td>
+                    <td class="apy ${apyClass(t.apy)}">${fmt(t.apy, 'apy')}</td>
+                    <td class="tvl">${fmt(t.tvl_usd, 'tvl')}</td>
+                    ${showRisk ? `<td class="apy ${apyClass(t.risk_score / 3)}">${t.risk_score ? t.risk_score.toFixed(1) : '—'}</td>` : ''}
+                </tr>`;
+            }).join('');
 
             document.getElementById(containerId).innerHTML = `
                 <div class="table-wrap"><table>
                     <thead><tr>
-                        <th data-col="symbol">Token</th>
-                        <th data-col="chain">Chain</th>
-                        <th data-col="protocol">Protocol</th>
-                        <th data-col="apy">APY</th>
-                        <th data-col="tvl_usd">TVL</th>
-                        ${showRisk ? '<th data-col="risk_score">Risk Score</th>' : ''}
+                        <th data-col="symbol" class="${sortCol==='symbol'?'sorted':''}">Token <span class="sort-arrow">${arrow('symbol')}</span></th>
+                        <th data-col="chain" class="${sortCol==='chain'?'sorted':''}">Chain <span class="sort-arrow">${arrow('chain')}</span></th>
+                        <th data-col="protocol" class="${sortCol==='protocol'?'sorted':''}">Protocol <span class="sort-arrow">${arrow('protocol')}</span></th>
+                        <th data-col="apy" class="${sortCol==='apy'?'sorted':''}">APY <span class="sort-arrow">${arrow('apy')}</span></th>
+                        <th data-col="tvl_usd" class="${sortCol==='tvl_usd'?'sorted':''}">TVL <span class="sort-arrow">${arrow('tvl_usd')}</span></th>
+                        ${showRisk ? `<th data-col="risk_score" class="${sortCol==='risk_score'?'sorted':''}">Risk Score <span class="sort-arrow">${arrow('risk_score')}</span></th>` : ''}
                     </tr></thead>
                     <tbody>${rows}</tbody>
                 </table></div>
+                ${filtered.length > 500 ? '<p style="text-align:center;color:var(--text2);padding:12px;font-size:0.85em">Showing top 500 of ' + filtered.length + ' results</p>' : ''}
             `;
         }
 
         function renderChains() {
             const grid = document.getElementById('section-chains');
             if (!DATA.chainSummary) { grid.innerHTML = ''; return; }
-            grid.innerHTML = '<div class="chain-grid">' + DATA.chainSummary.map(c => `
+            const filtered = DATA.chainSummary.filter(c => {
+                const search = document.getElementById('search').value.toLowerCase();
+                if (search && !c.chain.includes(search)) return false;
+                return true;
+            });
+            grid.innerHTML = '<div class="chain-grid">' + filtered.map(c => `
                 <div class="chain-card">
                     <div class="name">${c.chain}</div>
                     <div class="tvl">${fmt(c.total_tvl, 'tvl')}</div>
-                    <div style="color:var(--text2);font-size:0.85em">${c.token_count} tokens • avg ${(c.avg_apy || 0).toFixed(2)}% APY</div>
+                    <div class="detail">${c.token_count} tokens • avg ${(c.avg_apy || 0).toFixed(2)}% APY</div>
                 </div>
             `).join('') + '</div>';
+        }
+
+        function populateFilters() {
+            if (!DATA) return;
+            const chains = new Set();
+            const protos = new Set();
+            (DATA.allByApy || []).forEach(t => { chains.add(t.chain); protos.add(t.protocol); });
+            
+            const chainSelect = document.getElementById('chainFilter');
+            [...chains].sort().forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c; opt.textContent = c;
+                chainSelect.appendChild(opt);
+            });
+
+            const protoSelect = document.getElementById('protoFilter');
+            const topProtos = (DATA.protocolSummary || []).slice(0, 30);
+            topProtos.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.name; opt.textContent = p.name;
+                protoSelect.appendChild(opt);
+            });
+        }
+
+        function renderStats() {
+            if (!DATA || !DATA.stats) return;
+            const s = DATA.stats;
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card"><div class="num">${(s.total_tokens || 0).toLocaleString()}</div><div class="lbl">Tokens</div></div>
+                <div class="stat-card"><div class="num">${s.total_chains || 0}</div><div class="lbl">Chains</div></div>
+                <div class="stat-card"><div class="num">${s.total_protocols || 0}</div><div class="lbl">Protocols</div></div>
+                <div class="stat-card"><div class="num">${fmt(s.total_tvl, 'tvl')}</div><div class="lbl">Total TVL</div></div>
+            `;
+            const updated = new Date(DATA.generatedAt);
+            document.getElementById('meta').textContent = 'Updated: ' + updated.toLocaleString();
         }
 
         function render() {
             if (!DATA) return;
             renderStats();
-            
-            const search = document.getElementById('search').value.toLowerCase();
-            const filter = (tokens) => {
-                if (!search) return tokens;
-                return tokens.filter(t => 
-                    t.symbol.toLowerCase().includes(search) ||
-                    t.protocol.toLowerCase().includes(search) ||
-                    t.chain.toLowerCase().includes(search)
-                );
-            };
-
-            renderTable(filter(DATA.allByApy || []), 'section-all');
-            renderTable(filter(DATA.topYields?.stablecoin || []), 'section-stablecoins');
-            renderTable(filter(DATA.topYields?.eth || []), 'section-eth');
-            renderTable(filter(DATA.topYields?.btc || []), 'section-btc');
-            renderTable(filter(DATA.riskAdjusted || []), 'section-risk', true);
+            renderTable(DATA.allByApy || [], 'section-all');
+            renderTable(DATA.topYields?.stablecoin || [], 'section-stablecoins');
+            renderTable(DATA.topYields?.eth || [], 'section-eth');
+            renderTable(DATA.topYields?.btc || [], 'section-btc');
+            renderTable(DATA.riskAdjusted || [], 'section-risk', true);
             renderChains();
         }
 
@@ -229,17 +352,30 @@
                 tab.classList.add('active');
                 currentTab = tab.dataset.tab;
                 document.getElementById('section-' + currentTab).classList.add('active');
+                render();
             });
         });
 
-        // Search
-        document.getElementById('search').addEventListener('input', render);
+        // Filters
+        ['search', 'minTvl', 'maxTvl', 'minApy', 'maxApy'].forEach(id => {
+            document.getElementById(id).addEventListener('input', render);
+        });
+        ['chainFilter', 'protoFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', render);
+        });
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            ['search', 'minTvl', 'maxTvl', 'minApy', 'maxApy'].forEach(id => document.getElementById(id).value = '');
+            ['chainFilter', 'protoFilter'].forEach(id => document.getElementById(id).value = '');
+            render();
+        });
 
         // Sort on header click
         document.addEventListener('click', e => {
-            if (e.target.dataset.col) {
-                if (sortCol === e.target.dataset.col) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
-                else { sortCol = e.target.dataset.col; sortDir = 'desc'; }
+            const th = e.target.closest('th[data-col]');
+            if (th) {
+                const col = th.dataset.col;
+                if (sortCol === col) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+                else { sortCol = col; sortDir = 'desc'; }
                 render();
             }
         });
