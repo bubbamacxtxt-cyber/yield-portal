@@ -136,22 +136,11 @@
             <input type="text" class="filter-input" id="minTvl" placeholder="$1M">
         </div>
         <div class="filter-group">
-            <span class="filter-label">Max TVL</span>
-            <input type="text" class="filter-input" id="maxTvl" placeholder="No max">
-        </div>
-        <div class="filter-group">
             <span class="filter-label">Min APY</span>
             <input type="text" class="filter-input" id="minApy" placeholder="0%">
         </div>
-        <div class="filter-group">
-            <span class="filter-label">Max APY</span>
-            <input type="text" class="filter-input" id="maxApy" placeholder="No max">
-        </div>
         <select class="filter-select" id="chainFilter">
             <option value="">All Chains</option>
-        </select>
-        <select class="filter-select" id="protoFilter">
-            <option value="">All Protocols</option>
         </select>
         <button class="clear-btn" id="clearFilters">Clear</button>
     </div>
@@ -217,20 +206,14 @@
             if (!tokens) return [];
             const search = document.getElementById('search').value.toLowerCase();
             const minTvl = parseVal(document.getElementById('minTvl').value);
-            const maxTvl = parseVal(document.getElementById('maxTvl').value);
             const minApy = parseVal(document.getElementById('minApy').value);
-            const maxApy = parseVal(document.getElementById('maxApy').value);
             const chain = document.getElementById('chainFilter').value;
-            const proto = document.getElementById('protoFilter').value;
 
             return tokens.filter(t => {
                 if (search && !t.symbol.toLowerCase().includes(search) && !t.protocol.toLowerCase().includes(search) && !t.chain.toLowerCase().includes(search)) return false;
                 if (minTvl && (t.tvl_usd || 0) < minTvl) return false;
-                if (maxTvl && (t.tvl_usd || 0) > maxTvl) return false;
                 if (minApy !== null && !isNaN(minApy) && minApy > 0 && (t.apy || 0) < minApy) return false;
-                if (maxApy !== null && !isNaN(maxApy) && maxApy > 0 && (t.apy || 0) > maxApy) return false;
                 if (chain && t.chain !== chain) return false;
-                if (proto && !t.protocol.includes(proto)) return false;
                 return true;
             });
         }
@@ -357,15 +340,13 @@
         });
 
         // Filters
-        ['search', 'minTvl', 'maxTvl', 'minApy', 'maxApy'].forEach(id => {
+        ['search', 'minTvl', 'minApy'].forEach(id => {
             document.getElementById(id).addEventListener('input', render);
         });
-        ['chainFilter', 'protoFilter'].forEach(id => {
-            document.getElementById(id).addEventListener('change', render);
-        });
+        document.getElementById('chainFilter').addEventListener('change', render);
         document.getElementById('clearFilters').addEventListener('click', () => {
-            ['search', 'minTvl', 'maxTvl', 'minApy', 'maxApy'].forEach(id => document.getElementById(id).value = '');
-            ['chainFilter', 'protoFilter'].forEach(id => document.getElementById(id).value = '');
+            ['search', 'minTvl', 'minApy'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('chainFilter').value = '';
             render();
         });
 
