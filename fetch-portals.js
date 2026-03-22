@@ -26,11 +26,32 @@ const LENDING_PLATFORMS = [
 ];
 
 // Stablecoin symbols for categorization
-const STABLECOINS = new Set([
+const STABLECOIN_SYMBOLS = new Set([
     'USDC', 'USDT', 'DAI', 'FRAX', 'USDE', 'USDS', 'GHO', 'CRVUSD',
     'SUSD', 'LUSD', 'USDG', 'AUSD', 'RLUSD', 'USDTB', 'USDG', 'TUSD',
-    'BUSD', 'PYUSD', 'USDP', 'DOLA', 'EUSD', 'CUSD', 'UST', 'FDUSD'
+    'BUSD', 'PYUSD', 'USDP', 'DOLA', 'EUSD', 'CUSD', 'UST', 'FDUSD',
+    'USDD', 'MIM', 'CUSD', 'EURC', 'PYUSD', 'GYD', 'DGH', 'BUIDL',
+    // Staked/wrapped variants
+    'SUSDE', 'SUSDS', 'SFRAX', 'SDAI', 'SUSDC', 'SUSDT',
+    // Syrup/LP tokens
+    'SYRUPUSDC', 'SYRUPUSDT', 'SYRUPDAI',
 ]);
+
+// Check if a symbol is a stablecoin (includes prefix/suffix matching)
+function isStablecoin(symbol) {
+    const s = symbol.toUpperCase();
+    if (STABLECOIN_SYMBOLS.has(s)) return true;
+    // Catch variants: AETHUSDC, CBBTCUSDC, etc.
+    if (s.includes('USDC') || s.includes('USDT') || s.includes('DAI') || 
+        s.includes('FRAX') || s.includes('USDE') || s.includes('USD') ||
+        s.includes('EUR') || s.includes('GBP')) {
+        // Exclude BTC/ETH derivatives
+        if (s.includes('BTC') || s.includes('ETH') || s.includes('WSTETH') || 
+            s.includes('RETH') || s.includes('STETH')) return false;
+        return true;
+    }
+    return false;
+}
 
 // ETH-related symbols
 const ETH_TOKENS = new Set([
@@ -54,7 +75,7 @@ function initDb() {
 
 function categorizeToken(symbol) {
     const s = symbol.toUpperCase();
-    if (STABLECOINS.has(s)) return 'stablecoin';
+    if (isStablecoin(s)) return 'stablecoin';
     if (ETH_TOKENS.has(s)) return 'eth';
     if (BTC_TOKENS.has(s)) return 'btc';
     return 'other';
