@@ -3,126 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yield Portal</title>
+    <title>Yield Portal — Multi-Protocol Yield Analytics</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0f; color: #e0e0e0; padding: 20px;
+        :root {
+            --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a25;
+            --border: #2a2a3a; --text: #e0e0e0; --text2: #888;
+            --green: #00e676; --red: #ff5252; --blue: #448aff;
+            --gold: #ffd740; --purple: #b388ff;
         }
-        .header { text-align: center; padding: 40px 20px; }
-        .header h1 { font-size: 2.5em; color: #fff; margin-bottom: 8px; }
-        .header p { color: #888; font-size: 1.1em; }
-        .stats { display: flex; gap: 20px; justify-content: center; margin: 30px 0; flex-wrap: wrap; }
-        .stat { 
-            background: #141420; border: 1px solid #2a2a3a; border-radius: 12px;
-            padding: 20px 30px; text-align: center; min-width: 150px;
-        }
-        .stat .value { font-size: 2em; font-weight: 700; color: #fff; }
-        .stat .label { color: #888; margin-top: 4px; }
-        .status { 
-            background: #141420; border: 1px solid #2a2a3a; border-radius: 12px;
-            padding: 30px; max-width: 800px; margin: 30px auto;
-        }
-        .status h2 { color: #fff; margin-bottom: 20px; }
-        .status ul { list-style: none; }
-        .status li { padding: 8px 0; border-bottom: 1px solid #1a1a2a; }
-        .status li:last-child { border: none; }
-        .check { color: #4caf50; margin-right: 8px; }
-        .pending { color: #ff9800; margin-right: 8px; }
-        .features { max-width: 800px; margin: 30px auto; }
-        .features h2 { color: #fff; margin-bottom: 20px; text-align: center; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-        .feature { 
-            background: #141420; border: 1px solid #2a2a3a; border-radius: 12px;
-            padding: 20px;
-        }
-        .feature h3 { color: #fff; margin-bottom: 8px; font-size: 1em; }
-        .feature p { color: #888; font-size: 0.9em; line-height: 1.5; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+        
+        .header { padding: 24px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .header h1 { font-size: 1.4em; }
+        .header .meta { color: var(--text2); font-size: 0.85em; }
+        
+        .tabs { display: flex; gap: 4px; padding: 12px 20px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+        .tab { padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; color: var(--text2); background: none; border: none; white-space: nowrap; }
+        .tab:hover { background: var(--surface2); color: var(--text); }
+        .tab.active { background: var(--blue); color: #fff; }
+        
+        .stats-bar { display: flex; gap: 16px; padding: 16px 20px; flex-wrap: wrap; }
+        .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; flex: 1; min-width: 120px; }
+        .stat .value { font-size: 1.4em; font-weight: 700; }
+        .stat .label { color: var(--text2); font-size: 0.8em; margin-top: 2px; }
+        
+        .filters { display: flex; gap: 8px; padding: 12px 20px; flex-wrap: wrap; align-items: center; }
+        .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: none; color: var(--text2); cursor: pointer; font-size: 0.85em; }
+        .filter-btn:hover, .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .search { flex: 1; min-width: 200px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9em; }
+        
+        .table-wrap { padding: 0 20px 20px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th { text-align: left; padding: 10px 12px; color: var(--text2); font-weight: 500; border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; }
+        th:hover { color: var(--text); }
+        td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        tr:hover td { background: var(--surface); }
+        
+        .apy { font-weight: 700; }
+        .apy.high { color: var(--green); }
+        .apy.mid { color: var(--gold); }
+        .apy.low { color: var(--text); }
+        
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: 500; }
+        .badge-stablecoin { background: #1b5e20; color: #a5d6a7; }
+        .badge-eth { background: #1a237e; color: #9fa8da; }
+        .badge-btc { background: #4a148c; color: #ce93d8; }
+        .badge-other { background: #333; color: #aaa; }
+        
+        .tvl { color: var(--text2); }
+        .chain { color: var(--text2); font-size: 0.85em; }
+        
+        .section { padding: 20px; display: none; }
+        .section.active { display: block; }
+        
+        .chain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        .chain-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .chain-card .name { font-weight: 600; margin-bottom: 8px; }
+        .chain-card .tvl { font-size: 1.2em; font-weight: 700; }
+        
+        .footer { text-align: center; padding: 20px; color: var(--text2); font-size: 0.8em; border-top: 1px solid var(--border); }
+        .footer a { color: var(--text2); }
+        
+        .empty { text-align: center; padding: 60px 20px; color: var(--text2); }
+        .empty h2 { font-size: 1.2em; margin-bottom: 8px; color: var(--text); }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>📊 Yield Portal</h1>
-        <p>Multi-protocol yield analytics powered by Portals API</p>
+        <div class="meta" id="meta"></div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" data-tab="all">All Yields</button>
+        <button class="tab" data-tab="stablecoins">💵 Stablecoins</button>
+        <button class="tab" data-tab="eth">⟠ ETH</button>
+        <button class="tab" data-tab="btc">₿ BTC</button>
+        <button class="tab" data-tab="risk">🛡️ Risk-Adjusted</button>
+        <button class="tab" data-tab="chains">⛓️ Chains</button>
+    </div>
+    
+    <div class="stats-bar" id="stats-bar"></div>
+    
+    <div class="filters" id="filters">
+        <input type="text" class="search" id="search" placeholder="Search token, protocol, chain...">
+    </div>
+    
+    <div class="section active" id="section-all"></div>
+    <div class="section" id="section-stablecoins"></div>
+    <div class="section" id="section-eth"></div>
+    <div class="section" id="section-btc"></div>
+    <div class="section" id="section-risk"></div>
+    <div class="section" id="section-chains"></div>
+    
+    <div class="footer">
+        Built with data, not vibes. • <a href="https://github.com/bubbamacxtxt-cyber/yield-portal">GitHub</a>
     </div>
 
-    <div class="stats">
-        <div class="stat">
-            <div class="value">290+</div>
-            <div class="label">Protocols</div>
-        </div>
-        <div class="stat">
-            <div class="value">9</div>
-            <div class="label">Chains</div>
-        </div>
-        <div class="stat">
-            <div class="value">—</div>
-            <div class="label">Tokens Tracked</div>
-        </div>
-        <div class="stat">
-            <div class="value">—</div>
-            <div class="label">Last Updated</div>
-        </div>
-    </div>
+    <script>
+        let DATA = null;
+        let currentTab = 'all';
+        let sortCol = 'apy';
+        let sortDir = 'desc';
 
-    <div class="status">
-        <h2>Project Status</h2>
-        <ul>
-            <li><span class="check">✅</span> Project plan created</li>
-            <li><span class="check">✅</span> GitHub repo set up</li>
-            <li><span class="check">✅</span> Database schema designed</li>
-            <li><span class="check">✅</span> GitHub Pages deployed</li>
-            <li><span class="pending">⏳</span> Awaiting Portals API key</li>
-            <li><span class="pending">⏳</span> fetch-portals.js — Portals API fetcher</li>
-            <li><span class="pending">⏳</span> fetch-aave.js — Aave data pipeline</li>
-            <li><span class="pending">⏳</span> fetch-fluid.js — Fluid data pipeline</li>
-            <li><span class="pending">⏳</span> Analytics engine (deltas, momentum, risk)</li>
-            <li><span class="pending">⏳</span> Dashboard UI</li>
-            <li><span class="pending">⏳</span> GitHub Actions (4-hour refresh)</li>
-        </ul>
-    </div>
+        async function loadData() {
+            try {
+                const resp = await fetch('data.json');
+                DATA = await resp.json();
+                render();
+            } catch (e) {
+                document.getElementById('section-all').innerHTML = '<div class="empty"><h2>No data yet</h2><p>Data will appear after the first GitHub Actions fetch.</p></div>';
+            }
+        }
 
-    <div class="features">
-        <h2>Planned Features</h2>
-        <div class="feature-grid">
-            <div class="feature">
-                <h3>🏆 Best Rate Finder</h3>
-                <p>Pick any token → see yields across 290+ protocols ranked by APY</p>
-            </div>
-            <div class="feature">
-                <h3>📈 Yield Momentum</h3>
-                <p>Track which yields are accelerating, not just current rates</p>
-            </div>
-            <div class="feature">
-                <h3>🛡️ Risk-Adjusted Scoring</h3>
-                <p>APY × log(TVL) — one number for yield safety</p>
-            </div>
-            <div class="feature">
-                <h3>💵 Stablecoin Leaderboard</h3>
-                <p>Dedicated view for stablecoin yields across all protocols</p>
-            </div>
-            <div class="feature">
-                <h3>⚖️ Protocol Comparison</h3>
-                <p>Side-by-side: Aave vs Fluid vs Compound vs Morpho</p>
-            </div>
-            <div class="feature">
-                <h3>📊 TVL Flow Tracking</h3>
-                <p>Net inflows/outflows — which protocols are gaining trust</p>
-            </div>
-            <div class="feature">
-                <h3>🔔 Smart Alerts</h3>
-                <p>Spikes, drops, new listings — push to Telegram</p>
-            </div>
-            <div class="feature">
-                <h3>🧮 Savings Calculator</h3>
-                <p>$10K in USDC → projected monthly earnings</p>
-            </div>
-        </div>
-    </div>
+        function fmt(n, type) {
+            if (n == null) return '—';
+            if (type === 'apy') return n.toFixed(2) + '%';
+            if (type === 'tvl') {
+                if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+                if (n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+                if (n >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+                return '$' + n.toFixed(0);
+            }
+            return n;
+        }
 
-    <p style="text-align:center; color:#555; margin-top:40px; padding-bottom:20px;">
-        Built with data, not vibes. • <a href="https://github.com/bubbamacxtxt-cyber/yield-portal" style="color:#666;">GitHub</a>
-    </p>
+        function apyClass(apy) {
+            if (apy >= 5) return 'high';
+            if (apy >= 2) return 'mid';
+            return 'low';
+        }
+
+        function badge(type) {
+            return `<span class="badge badge-${type}">${type}</span>`;
+        }
+
+        function renderStats() {
+            const s = DATA.stats;
+            document.getElementById('stats-bar').innerHTML = `
+                <div class="stat"><div class="value">${s.total_tokens.toLocaleString()}</div><div class="label">Tokens Tracked</div></div>
+                <div class="stat"><div class="value">${s.total_chains}</div><div class="label">Chains</div></div>
+                <div class="stat"><div class="value">${s.total_protocols}</div><div class="label">Protocols</div></div>
+                <div class="stat"><div class="value">${fmt(s.total_tvl, 'tvl')}</div><div class="label">Total TVL</div></div>
+            `;
+            const updated = new Date(DATA.generatedAt);
+            document.getElementById('meta').textContent = `Updated: ${updated.toLocaleString()}`;
+        }
+
+        function renderTable(tokens, containerId, showRisk = false) {
+            if (!tokens || tokens.length === 0) {
+                document.getElementById(containerId).innerHTML = '<div class="empty"><h2>No data</h2></div>';
+                return;
+            }
+            
+            const sorted = [...tokens].sort((a, b) => {
+                let va = a[sortCol], vb = b[sortCol];
+                if (sortCol === 'risk_score') { va = a.risk_score || 0; vb = b.risk_score || 0; }
+                return sortDir === 'desc' ? vb - va : va - vb;
+            });
+
+            const rows = sorted.map(t => `<tr>
+                <td><strong>${t.symbol}</strong> ${badge(t.asset_type)}</td>
+                <td class="chain">${t.chain}</td>
+                <td>${t.protocol}</td>
+                <td class="apy ${apyClass(t.apy)}">${fmt(t.apy, 'apy')}</td>
+                <td class="tvl">${fmt(t.tvl_usd, 'tvl')}</td>
+                ${showRisk ? `<td>${t.risk_score ? t.risk_score.toFixed(1) : '—'}</td>` : ''}
+            </tr>`).join('');
+
+            document.getElementById(containerId).innerHTML = `
+                <div class="table-wrap"><table>
+                    <thead><tr>
+                        <th data-col="symbol">Token</th>
+                        <th data-col="chain">Chain</th>
+                        <th data-col="protocol">Protocol</th>
+                        <th data-col="apy">APY</th>
+                        <th data-col="tvl_usd">TVL</th>
+                        ${showRisk ? '<th data-col="risk_score">Risk Score</th>' : ''}
+                    </tr></thead>
+                    <tbody>${rows}</tbody>
+                </table></div>
+            `;
+        }
+
+        function renderChains() {
+            const grid = document.getElementById('section-chains');
+            if (!DATA.chainSummary) { grid.innerHTML = ''; return; }
+            grid.innerHTML = '<div class="chain-grid">' + DATA.chainSummary.map(c => `
+                <div class="chain-card">
+                    <div class="name">${c.chain}</div>
+                    <div class="tvl">${fmt(c.total_tvl, 'tvl')}</div>
+                    <div style="color:var(--text2);font-size:0.85em">${c.token_count} tokens • avg ${(c.avg_apy || 0).toFixed(2)}% APY</div>
+                </div>
+            `).join('') + '</div>';
+        }
+
+        function render() {
+            if (!DATA) return;
+            renderStats();
+            
+            const search = document.getElementById('search').value.toLowerCase();
+            const filter = (tokens) => {
+                if (!search) return tokens;
+                return tokens.filter(t => 
+                    t.symbol.toLowerCase().includes(search) ||
+                    t.protocol.toLowerCase().includes(search) ||
+                    t.chain.toLowerCase().includes(search)
+                );
+            };
+
+            renderTable(filter(DATA.allByApy || []), 'section-all');
+            renderTable(filter(DATA.topYields?.stablecoin || []), 'section-stablecoins');
+            renderTable(filter(DATA.topYields?.eth || []), 'section-eth');
+            renderTable(filter(DATA.topYields?.btc || []), 'section-btc');
+            renderTable(filter(DATA.riskAdjusted || []), 'section-risk', true);
+            renderChains();
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                currentTab = tab.dataset.tab;
+                document.getElementById('section-' + currentTab).classList.add('active');
+            });
+        });
+
+        // Search
+        document.getElementById('search').addEventListener('input', render);
+
+        // Sort on header click
+        document.addEventListener('click', e => {
+            if (e.target.dataset.col) {
+                if (sortCol === e.target.dataset.col) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+                else { sortCol = e.target.dataset.col; sortDir = 'desc'; }
+                render();
+            }
+        });
+
+        loadData();
+    </script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+name: Fetch Yield Data & Deploy
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Every 4 hours
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data.json'
+      - 'yield-portal.db'
+
+jobs:
+  fetch-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch Portals data
+        env:
+          PORTALS_API_KEY: ${{ secrets.PORTALS_API_KEY }}
+        run: node fetch-portals.js
+
+      - name: Export data.json
+        run: node export-data.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "Bub2"
+          git config user.email "bub2@openclaw.ai"
+          git add data.json yield-portal.db
+          git diff --staged --quiet || git commit -m "Data update $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          exclude_assets: '*.js,*.sql,package*.json,.env,node_modules,.github,.git'

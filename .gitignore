@@ -1,0 +1,5 @@
+node_modules/
+.env
+yield-portal.db
+yield-portal.db-wal
+yield-portal.db-shm
