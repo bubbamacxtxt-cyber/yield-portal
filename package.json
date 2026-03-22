@@ -1,0 +1,22 @@
+{
+  "name": "yield-portal",
+  "version": "1.0.0",
+  "description": "Multi-protocol yield analytics dashboard powered by Portals API",
+  "main": "fetch-portals.js",
+  "scripts": {
+    "fetch": "node fetch-portals.js && node fetch-aave.js && node fetch-fluid.js",
+    "fetch:portals": "node fetch-portals.js",
+    "fetch:aave": "node fetch-aave.js",
+    "fetch:fluid": "node fetch-fluid.js",
+    "compute": "node compute-deltas.js && node compute-risk.js",
+    "export": "node export-data.js",
+    "alerts": "node alerts.js",
+    "serve": "node server.js"
+  },
+  "keywords": ["defi", "yields", "analytics", "portals", "aave", "fluid"],
+  "author": "Bub2",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  }
+}
