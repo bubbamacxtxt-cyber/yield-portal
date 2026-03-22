@@ -103,6 +103,14 @@
         .chain-card .tvl { font-size: 1.3em; font-weight: 800; font-variant-numeric: tabular-nums; }
         .chain-card .detail { color: var(--text2); font-size: 0.8em; margin-top: 4px; }
         
+        /* Pagination */
+        .pagination { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 16px 24px; flex-wrap: wrap; }
+        .page-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-size: 0.85em; transition: all 0.15s; }
+        .page-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+        .page-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .page-btn:disabled { opacity: 0.3; cursor: default; }
+        .page-info { margin-left: 16px; color: var(--text3); font-size: 0.8em; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .filters { padding: 12px 16px; }
@@ -161,6 +169,8 @@
         let currentTab = 'all';
         let sortCol = 'apy';
         let sortDir = 'desc';
+        let currentPage = 1;
+        const PAGE_SIZE = 50;
 
         async function loadData() {
             try {
@@ -233,11 +243,14 @@
                 return;
             }
 
+            const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const page = filtered.slice(start, start + PAGE_SIZE);
+
             const arrow = (col) => sortCol === col ? (sortDir === 'desc' ? '↓' : '↑') : '';
 
-            const rows = filtered.slice(0, 500).map(t => {
-                const change1d = t.change_1d;
-                const change7d = t.change_7d;
+            const rows = page.map(t => {
                 return `<tr>
                     <td><span class="token-name">${t.symbol}</span> <span class="badge badge-${t.asset_type}">${t.asset_type}</span></td>
                     <td><span class="chain-badge">${t.chain}</span></td>
@@ -247,6 +260,20 @@
                     ${showRisk ? `<td class="apy ${apyClass(t.risk_score / 3)}">${t.risk_score ? t.risk_score.toFixed(1) : '—'}</td>` : ''}
                 </tr>`;
             }).join('');
+
+            // Pagination controls
+            let pagination = '';
+            if (totalPages > 1) {
+                const pages = [];
+                pages.push(`<button class="page-btn" data-page="1" ${currentPage===1?'disabled':''}>‹‹</button>`);
+                pages.push(`<button class="page-btn" data-page="${currentPage-1}" ${currentPage===1?'disabled':''}>‹</button>`);
+                for (let p = Math.max(1, currentPage-2); p <= Math.min(totalPages, currentPage+2); p++) {
+                    pages.push(`<button class="page-btn ${p===currentPage?'active':''}" data-page="${p}">${p}</button>`);
+                }
+                pages.push(`<button class="page-btn" data-page="${currentPage+1}" ${currentPage===totalPages?'disabled':''}>›</button>`);
+                pages.push(`<button class="page-btn" data-page="${totalPages}" ${currentPage===totalPages?'disabled':''}>››</button>`);
+                pagination = `<div class="pagination">${pages.join('')}<span class="page-info">Page ${currentPage} of ${totalPages} • ${filtered.length.toLocaleString()} results</span></div>`;
+            }
 
             document.getElementById(containerId).innerHTML = `
                 <div class="table-wrap"><table>
@@ -260,7 +287,7 @@
                     </tr></thead>
                     <tbody>${rows}</tbody>
                 </table></div>
-                ${filtered.length > 500 ? '<p style="text-align:center;color:var(--text2);padding:12px;font-size:0.85em">Showing top 500 of ' + filtered.length + ' results</p>' : ''}
+                ${pagination}
             `;
         }
 
@@ -341,23 +368,32 @@
 
         // Filters
         ['search', 'minTvl', 'minApy'].forEach(id => {
-            document.getElementById(id).addEventListener('input', render);
+            document.getElementById(id).addEventListener('input', () => { currentPage = 1; render(); });
         });
-        document.getElementById('chainFilter').addEventListener('change', render);
+        document.getElementById('chainFilter').addEventListener('change', () => { currentPage = 1; render(); });
         document.getElementById('clearFilters').addEventListener('click', () => {
             ['search', 'minTvl', 'minApy'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('chainFilter').value = '';
+            currentPage = 1;
             render();
         });
 
-        // Sort on header click
+        // Sort on header click — reset to page 1
         document.addEventListener('click', e => {
             const th = e.target.closest('th[data-col]');
             if (th) {
                 const col = th.dataset.col;
                 if (sortCol === col) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
                 else { sortCol = col; sortDir = 'desc'; }
+                currentPage = 1;
                 render();
+            }
+            // Pagination buttons
+            const btn = e.target.closest('.page-btn');
+            if (btn && btn.dataset.page) {
+                currentPage = parseInt(btn.dataset.page);
+                render();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
 
