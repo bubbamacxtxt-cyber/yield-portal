@@ -22,14 +22,15 @@ function main() {
     const topYields = {};
     for (const assetType of ['stablecoin', 'eth', 'btc', 'other']) {
         topYields[assetType] = db.prepare(`
-            SELECT t.symbol, t.chain, p.name as protocol, t.apy, t.tvl_usd, t.price_usd,
+            SELECT t.symbol, t.chain, p.name as protocol, p.platform_id,
+                   t.apy, t.tvl_usd, t.price_usd,
                    t.asset_type, t.is_verified,
-                   ROUND(t.apy * LOG(t.tvl_usd + 1), 2) as risk_score
+                   CASE WHEN t.apy > 0 THEN ROUND(t.apy * LOG(t.tvl_usd + 1), 2) ELSE 0 END as risk_score
             FROM tokens t
             JOIN protocols p ON t.protocol_id = p.id
-            WHERE t.asset_type = ? AND t.tvl_usd > 100000 AND t.apy > 0
-            ORDER BY t.apy DESC
-            LIMIT 50
+            WHERE t.asset_type = ? AND t.tvl_usd > 100000
+            ORDER BY t.apy DESC, t.tvl_usd DESC
+            LIMIT 100
         `).all(assetType);
     }
 
