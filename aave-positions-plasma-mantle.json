@@ -1,0 +1,23 @@
+[
+  {
+    "wallet": "0x3207363359Ca0c11D11073aD48301E8c958B7910",
+    "chain": "plasma",
+    "collateral": 128143252.60201322,
+    "debt": 115188062.2721209,
+    "healthFactor": 1.023472311873291
+  },
+  {
+    "wallet": "0xc468315a2df54f9c076bD5Cfe5002BA211F74CA6",
+    "chain": "plasma",
+    "collateral": 130206946.51499043,
+    "debt": 116974385.65528332,
+    "healthFactor": 1.0352049261091527
+  },
+  {
+    "wallet": "0x920EefBCf1f5756109952E6Ff6dA1Cab950C64d7",
+    "chain": "mantle",
+    "collateral": 185654988.9939624,
+    "debt": 166939138.3578347,
+    "healthFactor": 1.0231428744308562
+  }
+]

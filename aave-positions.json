@@ -1,0 +1,52 @@
+[
+  {
+    "wallet": "0xc468315a2df54f9c076bD5Cfe5002BA211F74CA6",
+    "collateral": 256468744.45881307,
+    "debt": 230679623.29956853,
+    "available": 142246.71336326,
+    "healthFactor": 1.0339705299282163,
+    "ltv": 90,
+    "chain": "ethereum",
+    "utilization": 89.9445364332159
+  },
+  {
+    "wallet": "0x920EefBCf1f5756109952E6Ff6dA1Cab950C64d7",
+    "collateral": 46539007.36169653,
+    "debt": 41807718.76929625,
+    "available": 77387.85623062,
+    "healthFactor": 1.0241143988034325,
+    "ltv": 90,
+    "chain": "ethereum",
+    "utilization": 89.83371399473742
+  },
+  {
+    "wallet": "0x7bee8D37FBA61a6251a08b957d502C56E2A50FAb",
+    "collateral": 44558227.18615004,
+    "debt": 39746465.18021602,
+    "available": 355939.28731901,
+    "healthFactor": 1.0313764714770854,
+    "ltv": 90,
+    "chain": "base",
+    "utilization": 89.20118166768168
+  },
+  {
+    "wallet": "0x3207363359Ca0c11D11073aD48301E8c958B7910",
+    "collateral": 34300975.58028795,
+    "debt": 30688316.06290616,
+    "available": 182561.95935299,
+    "healthFactor": 1.0283033278586646,
+    "ltv": 90,
+    "chain": "ethereum",
+    "utilization": 89.46776452778822
+  },
+  {
+    "wallet": "0x887fD380C1e4Cc28e119917015fE7fb0062c5d67",
+    "collateral": 0.11915583,
+    "debt": 0,
+    "available": 0.05957791,
+    "healthFactor": 1.157920892373162e+59,
+    "ltv": 50,
+    "chain": "avalanche",
+    "utilization": 0
+  }
+]

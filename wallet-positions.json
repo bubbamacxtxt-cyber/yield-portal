@@ -1,0 +1,531 @@
+[
+  {
+    "wallet": "0xc468315a2df54f9c076bD5Cfe5002BA211F74CA6",
+    "short": "0xc46831...4CA6",
+    "totalUSD": 256338463.19500127,
+    "positions": [
+      {
+        "symbol": "AETHUSDE",
+        "name": "Aave Ethereum USDe",
+        "balance": 256525510.58924454,
+        "usd": 256337990.4410038,
+        "network": "ethereum",
+        "platform": "aavev3",
+        "classification": {
+          "platform": "aavev3",
+          "type": "defi"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.1564075349223933,
+        "usd": 333.052640788395,
+        "network": "ethereum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.050004632955598746,
+        "usd": 106.47936536932241,
+        "network": "base",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.009956690604569343,
+        "usd": 21.20167740646391,
+        "network": "arbitrum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "balance": 0.9991884990457428,
+        "usd": 9.432339430991812,
+        "network": "avalanche",
+        "platform": "native",
+        "classification": {
+          "platform": "aave",
+          "type": "lending"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "GHO",
+        "name": "Avalanche Bridged GHO (Avalanche)",
+        "balance": 0.8645950489179973,
+        "usd": 0.8638757058372974,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "EPT-KHYPE-19MAR2026-1",
+        "name": "Euler EVK Vault ePT-kHYPE-19MAR2026-1",
+        "balance": 0.019006862867210077,
+        "usd": 0.7321110034211559,
+        "network": "hyperevm",
+        "platform": "euler",
+        "classification": {
+          "platform": "euler",
+          "type": "defi"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "HYPE",
+        "name": "Hyperliquid",
+        "balance": 0.019006862867210077,
+        "usd": 0.7313840831302437,
+        "network": "hyperevm",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "USDC",
+        "name": "USDC",
+        "balance": 0.236001,
+        "usd": 0.23597055587099997,
+        "network": "arbitrum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ZIK",
+        "name": "ZIK coin",
+        "balance": 222,
+        "usd": 0.024633119999999998,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      }
+    ],
+    "byPlatform": {
+      "aavev3": {
+        "total": 256337990.4410038,
+        "tokens": [
+          "AETHUSDE ($256,337,990) on ethereum"
+        ],
+        "type": "defi"
+      },
+      "aave": {
+        "total": 9.432339430991812,
+        "tokens": [
+          "AVAX ($9) on avalanche"
+        ],
+        "type": "lending"
+      },
+      "euler": {
+        "total": 0.7321110034211559,
+        "tokens": [
+          "EPT-KHYPE-19MAR2026-1 ($1) on hyperevm"
+        ],
+        "type": "defi"
+      }
+    }
+  },
+  {
+    "wallet": "0x920EefBCf1f5756109952E6Ff6dA1Cab950C64d7",
+    "short": "0x920Eef...64d7",
+    "totalUSD": 46515642.87631414,
+    "positions": [
+      {
+        "symbol": "AETHSUSDE",
+        "name": "Aave Ethereum sUSDe",
+        "balance": 38006079.30714675,
+        "usd": 46515260.67291051,
+        "network": "ethereum",
+        "platform": "aavev3",
+        "classification": {
+          "platform": "aavev3",
+          "type": "defi"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "USDE",
+        "name": "Bridged USDe",
+        "balance": 244.7565294372456,
+        "usd": 244.59082926681657,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": {
+          "platform": "ethena",
+          "type": "stablecoin"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.062407895602874235,
+        "usd": 132.84207065923414,
+        "network": "ethereum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "balance": 0.24987838568912196,
+        "usd": 2.3588519609053114,
+        "network": "avalanche",
+        "platform": "native",
+        "classification": {
+          "platform": "aave",
+          "type": "lending"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.00099918381,
+        "usd": 2.1268726498041004,
+        "network": "arbitrum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "RUSD",
+        "name": "Reservoir rUSD",
+        "balance": 0.2853881058099341,
+        "usd": 0.2847790875921357,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      }
+    ],
+    "byPlatform": {
+      "aavev3": {
+        "total": 46515260.67291051,
+        "tokens": [
+          "AETHSUSDE ($46,515,261) on ethereum"
+        ],
+        "type": "defi"
+      },
+      "ethena": {
+        "total": 244.59082926681657,
+        "tokens": [
+          "USDE ($245) on ethereum"
+        ],
+        "type": "stablecoin"
+      },
+      "aave": {
+        "total": 2.3588519609053114,
+        "tokens": [
+          "AVAX ($2) on avalanche"
+        ],
+        "type": "lending"
+      }
+    }
+  },
+  {
+    "wallet": "0x7bee8D37FBA61a6251a08b957d502C56E2A50FAb",
+    "short": "0x7bee8D...0FAb",
+    "totalUSD": 44559861.147850946,
+    "positions": [
+      {
+        "symbol": "ABASSYRUPUSDC",
+        "name": "Aave Base syrupUSDC",
+        "balance": 38524417.032089,
+        "usd": 44559035.78538315,
+        "network": "base",
+        "platform": "aavev3",
+        "classification": {
+          "platform": "aavev3",
+          "type": "defi"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.23901172764622386,
+        "usd": 511.3990529409664,
+        "network": "base",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.09889064659052613,
+        "usd": 210.49961923905983,
+        "network": "arbitrum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.027143698948096977,
+        "usd": 57.77834901790871,
+        "network": "ethereum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "DAI",
+        "name": "Dai",
+        "balance": 35.4325742908293,
+        "usd": 35.42704680923993,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": {
+          "platform": "makerdao",
+          "type": "stablecoin"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "USDS",
+        "name": "USDS Stablecoin",
+        "balance": 9.379548566561972,
+        "usd": 9.379051450487944,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": {
+          "platform": "makerdao",
+          "type": "stablecoin"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "balance": 0.046886547068551415,
+        "usd": 0.44260900432712535,
+        "network": "avalanche",
+        "platform": "native",
+        "classification": {
+          "platform": "aave",
+          "type": "lending"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "USDC",
+        "name": "USDC",
+        "balance": 0.218981,
+        "usd": 0.21895340839400002,
+        "network": "arbitrum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "WETH",
+        "name": "WETH",
+        "balance": 0.000070714144459648,
+        "usd": 0.15067628473172875,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "EUSDE",
+        "name": "Ethereal Pre-deposit Vault",
+        "balance": 0.06812687750946013,
+        "usd": 0.06710964804362107,
+        "network": "ethereum",
+        "platform": "basic",
+        "classification": {
+          "platform": "euler",
+          "type": "lending"
+        },
+        "isDeFi": true
+      }
+    ],
+    "byPlatform": {
+      "aavev3": {
+        "total": 44559035.78538315,
+        "tokens": [
+          "ABASSYRUPUSDC ($44,559,036) on base"
+        ],
+        "type": "defi"
+      },
+      "makerdao": {
+        "total": 44.806098259727875,
+        "tokens": [
+          "DAI ($35) on ethereum",
+          "USDS ($9) on ethereum"
+        ],
+        "type": "stablecoin"
+      },
+      "aave": {
+        "total": 0.44260900432712535,
+        "tokens": [
+          "AVAX ($0) on avalanche"
+        ],
+        "type": "lending"
+      },
+      "euler": {
+        "total": 0.06710964804362107,
+        "tokens": [
+          "EUSDE ($0) on ethereum"
+        ],
+        "type": "lending"
+      }
+    }
+  },
+  {
+    "wallet": "0x3207363359Ca0c11D11073aD48301E8c958B7910",
+    "short": "0x320736...7910",
+    "totalUSD": 34299916.36720113,
+    "positions": [
+      {
+        "symbol": "AETHSYRUPUSDT",
+        "name": "Aave Ethereum syrupUSDT",
+        "balance": 30612928.618266,
+        "usd": 34299770.51451099,
+        "network": "ethereum",
+        "platform": "aavev3",
+        "classification": {
+          "platform": "aavev3",
+          "type": "defi"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.04981577707113823,
+        "usd": 106.03836123139556,
+        "network": "ethereum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "WAVAX",
+        "name": "Wrapped AVAX",
+        "balance": 3.8651258534041255,
+        "usd": 36.56409057320303,
+        "network": "avalanche",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "balance": 0.34260231361984705,
+        "usd": 3.234165840571356,
+        "network": "avalanche",
+        "platform": "native",
+        "classification": {
+          "platform": "aave",
+          "type": "lending"
+        },
+        "isDeFi": true
+      },
+      {
+        "symbol": "RDAC",
+        "name": "Redacted",
+        "balance": 25,
+        "usd": 0.0160725,
+        "network": "base",
+        "platform": "basic",
+        "classification": {
+          "platform": "radiant",
+          "type": "lending"
+        },
+        "isDeFi": true
+      }
+    ],
+    "byPlatform": {
+      "aavev3": {
+        "total": 34299770.51451099,
+        "tokens": [
+          "AETHSYRUPUSDT ($34,299,771) on ethereum"
+        ],
+        "type": "defi"
+      },
+      "aave": {
+        "total": 3.234165840571356,
+        "tokens": [
+          "AVAX ($3) on avalanche"
+        ],
+        "type": "lending"
+      },
+      "radiant": {
+        "total": 0.0160725,
+        "tokens": [
+          "RDAC ($0) on base"
+        ],
+        "type": "lending"
+      }
+    }
+  },
+  {
+    "wallet": "0x3BbCb84fCDE71063D8C396e6C54F5dC3D19EE0EC",
+    "short": "0x3BbCb8...E0EC",
+    "totalUSD": 1536247.0356789753,
+    "positions": [
+      {
+        "symbol": "USDC",
+        "name": "USDC",
+        "balance": 1536414.836298,
+        "usd": 1536216.6387841175,
+        "network": "avalanche",
+        "platform": "basic",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "balance": 0.012838628471739041,
+        "usd": 27.338447081436396,
+        "network": "ethereum",
+        "platform": "native",
+        "classification": null,
+        "isDeFi": false
+      },
+      {
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "balance": 0.32398811190123655,
+        "usd": 3.058447776347673,
+        "network": "avalanche",
+        "platform": "native",
+        "classification": {
+          "platform": "aave",
+          "type": "lending"
+        },
+        "isDeFi": true
+      }
+    ],
+    "byPlatform": {
+      "aave": {
+        "total": 3.058447776347673,
+        "tokens": [
+          "AVAX ($3) on avalanche"
+        ],
+        "type": "lending"
+      }
+    }
+  }
+]

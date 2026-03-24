@@ -1,0 +1,37 @@
+[
+  {
+    "wallet": "0x3207363359Ca0c11D11073aD48301E8c958B7910",
+    "chain": "ethereum",
+    "collateral": 34301113.95072531,
+    "debt": 30688424.798461035,
+    "healthFactor": 1.0283038325332947
+  },
+  {
+    "wallet": "0x920EefBCf1f5756109952E6Ff6dA1Cab950C64d7",
+    "chain": "ethereum",
+    "collateral": 46539198.152214654,
+    "debt": 41807869.18751246,
+    "healthFactor": 1.024114912625735
+  },
+  {
+    "wallet": "0xc468315a2df54f9c076bD5Cfe5002BA211F74CA6",
+    "chain": "ethereum",
+    "collateral": 256469042.71578583,
+    "debt": 230681355.16309577,
+    "healthFactor": 1.0339639697237155
+  },
+  {
+    "wallet": "0x7bee8D37FBA61a6251a08b957d502C56E2A50FAb",
+    "chain": "base",
+    "collateral": 44558227.186150044,
+    "debt": 39746635.603017494,
+    "healthFactor": 1.0313720492142957
+  },
+  {
+    "wallet": "0x887fD380C1e4Cc28e119917015fE7fb0062c5d67",
+    "chain": "avalanche",
+    "collateral": 0.11947412053205052,
+    "debt": 0.0,
+    "healthFactor": 0.0
+  }
+]
